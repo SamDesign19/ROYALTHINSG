@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Availability } from "@/components/store/availability";
 import { Breadcrumbs } from "@/components/store/breadcrumbs";
+import { AddToCart } from "@/components/store/cart/add-to-cart";
 import { Gallery } from "@/components/store/gallery";
 import { OriginBadge } from "@/components/store/origin-badge";
 import { Amount, Price } from "@/components/store/price";
@@ -116,6 +117,9 @@ export default async function ProductPage({ params }: PageProps<"/[locale]/p/[sl
             <div className="space-y-3 border-y border-line py-5">
               <Price price={product.price_dzd} compareAt={product.compare_at_dzd} locale={locale} size="lg" />
               <Availability inStock={product.in_stock} lowStock={product.low_stock} className="text-sm" />
+              <div className="pt-2">
+                <AddToCart productId={product.id} available={product.in_stock} />
+              </div>
               <p className="flex items-center gap-2 text-sm text-ink-2">
                 <Banknote className="size-4 shrink-0" aria-hidden />
                 {t("codDelivery")}

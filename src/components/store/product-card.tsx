@@ -5,6 +5,7 @@ import type { Locale } from "@/i18n/routing";
 import { formatInteger } from "@/lib/format";
 import { pick } from "@/lib/localized";
 import { Availability } from "./availability";
+import { AddToCartCompact } from "./cart/add-to-cart";
 import { OriginBadge } from "./origin-badge";
 import { Price } from "./price";
 import { ProductImage } from "./product-image";
@@ -20,15 +21,18 @@ export function ProductCard({ product, priority }: { product: ProductCardData; p
 
   return (
     <article className="group relative flex flex-col overflow-hidden rounded-card border border-line bg-bg transition-shadow duration-[var(--ri-fast)] hover:shadow-1">
-      <ProductImage
-        path={product.image_path}
-        alt={name}
-        type={product.product_type}
-        sizes="(min-width: 1280px) 300px, (min-width: 768px) 33vw, 50vw"
-        priority={priority}
-        noImageLabel={t("noImage")}
-        className="transition-ri group-hover:[&_img]:scale-[1.03] [&_img]:transition-ri"
-      />
+      <div className="relative">
+        <ProductImage
+          path={product.image_path}
+          alt={name}
+          type={product.product_type}
+          sizes="(min-width: 1280px) 300px, (min-width: 768px) 33vw, 50vw"
+          priority={priority}
+          noImageLabel={t("noImage")}
+          className="transition-ri group-hover:[&_img]:scale-[1.03] [&_img]:transition-ri"
+        />
+        {product.in_stock ? <AddToCartCompact productId={product.id} name={name} className="absolute bottom-3 end-3" /> : null}
+      </div>
       <div className="flex flex-1 flex-col gap-2 p-3 sm:p-4">
         <p className="flex items-center gap-1.5 truncate text-xs text-ink-2">
           {product.brand_name ? <span className="font-medium text-ink">{product.brand_name}</span> : null}

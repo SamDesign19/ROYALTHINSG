@@ -1,4 +1,4 @@
-import { BadgeCheck, Banknote, Truck } from "lucide-react";
+import { BadgeCheck, Banknote, PackageSearch, Truck } from "lucide-react";
 import { getLocale, getTranslations } from "next-intl/server";
 import { Suspense } from "react";
 import { getCategoryTree } from "@/features/catalog/queries";
@@ -47,6 +47,9 @@ export async function Footer() {
             <li className="flex items-center gap-2"><Banknote className="size-4 shrink-0" aria-hidden />{t("cod")}</li>
             <li className="flex items-center gap-2"><Truck className="size-4 shrink-0" aria-hidden />{t("delivery")}</li>
             <li className="flex items-center gap-2"><BadgeCheck className="size-4 shrink-0" aria-hidden />{t("verified")}</li>
+            <li>
+              <Link href="/track" className="inline-flex min-h-9 items-center gap-2 hover:text-ink"><PackageSearch className="size-4 shrink-0" aria-hidden />{th("track")}</Link>
+            </li>
           </ul>
         </div>
       </div>

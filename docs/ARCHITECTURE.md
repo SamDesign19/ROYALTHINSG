@@ -44,6 +44,29 @@ cart in Phase 4.
   `/api/search/count` (live count in the mobile filter sheet). All read-only, anon key.
 * `src/proxy.ts` (Next 16's replacement for middleware) handles locale routing via next-intl.
 
+### Back office (Phase 5)
+
+* `/admin` sits outside locale routing. `src/proxy.ts` refreshes the Supabase session cookie for `/admin/*` and
+  sends signed-out visitors to `/admin/login`; every admin page and Server Action calls `requireStaff()`
+  (`src/server/auth.ts`, checked against the Auth server and `profiles.role`), and RLS enforces the same rule
+  in the database. All writes use the staff member's session (no service-role key).
+* Status changes go through `set_order_status()`, stock through `adjust_stock()` (audited movements); products,
+  prices, delivery rates, printers, compatibility and promo codes use the staff RLS policies.
+* After a change the storefront's cached pages are revalidated (`revalidatePath("/[locale]", "layout")`).
+* Local testing: `scripts/local-stack.sh` runs GoTrue (Supabase Auth) so sign-in and RLS are exercised for real.
+
+### Cart and cash-on-delivery checkout (Phase 4, guest)
+
+* The cart is a cookie (`ri_cart`) holding product ids and quantities only: no prices, nothing secret. Server
+  Actions (`src/features/cart/actions.ts`) change it; the header reads the item count in the browser, so cached
+  catalog pages stay cached. Guests need no database row and no service-role key.
+* The cart page prices every line with `unit_price()` (volume tiers included), the function `place_order()` uses.
+* Checkout (`src/features/checkout/actions.ts`) validates with zod, normalises the phone like the database,
+  then calls `place_order()`, which re-prices, applies the promo code and delivery fee, locks and decrements
+  stock and records the order. Database errors map to translated messages.
+* Guests cannot read `orders` (RLS), so the confirmation page uses a short-lived httpOnly cookie set when the
+  order is placed; tracking uses `find_guest_order()` (order number + phone, sent by POST).
+
 ### Security model (implemented in `supabase/migrations/*_security.sql`)
 
 * RLS is enabled on every table. Shoppers read only active catalog rows, verified compatibility and their own
@@ -113,6 +136,6 @@ tests/db                        SQL test suite (this phase)
 | 1. Architecture & design system | Schema, business functions, RLS, reference data, design tokens, docs | **Done — 107 SQL checks + concurrency test passing** |
 | 2. Frontend foundation | Next.js app, layout, home, listings, product page, i18n/RTL | **Done — 16 unit tests, 11 Playwright tests (desktop + mobile)** |
 | 3. Product engine wiring | Catalog/search/compatibility pages on the real database | **Read side done with Phase 2** (search, filters, autocomplete, Find your ink, verified printers). Remaining: sitemap, admin-triggered cache revalidation |
-| 4. Shopping & checkout | Cart, accounts, checkout, order pages | Not started (database side done) |
-| 5. Administration | Back office | Not started (permissions and functions done) |
+| 4. Shopping & checkout | Cart, accounts, checkout, order pages | **Guest cart, COD checkout, confirmation and tracking done** (3 Playwright tests). Remaining: customer accounts, order history, wishlist, B2B pages |
+| 5. Administration | Back office | **Done for daily operations** (3 Playwright tests): orders, products and bulk publishing, stock, printers and compatibility, categories and brands, delivery, promo codes. Remaining: photo upload, banners/collections, quotes and business accounts, returns, roles UI, CSV import/export |
 | 6. Optimisation & verification | SEO, performance, E2E tests (Playwright) | Not started |

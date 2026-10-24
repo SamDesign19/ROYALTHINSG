@@ -37,7 +37,7 @@ jobs:
       - run: npm ci
       - run: npx playwright install --with-deps chromium
       - name: Local stack (PostgreSQL + PostgREST with test fixtures)
-        run: scripts/local-stack.sh up && cp .local-stack/env .env.local
+        run: scripts/local-stack.sh up && cp .local-stack/env .env.local && cat .local-stack/env >> "$GITHUB_ENV"
       - run: npm run build
       - run: npx playwright test
       - uses: actions/upload-artifact@v4
