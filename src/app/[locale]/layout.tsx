@@ -1,5 +1,4 @@
 import type { Metadata, Viewport } from "next";
-import { IBM_Plex_Sans_Arabic, Inter } from "next/font/google";
 import { notFound } from "next/navigation";
 import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
@@ -7,15 +6,8 @@ import { Footer } from "@/components/store/footer";
 import { Header } from "@/components/store/header";
 import { directionOf, routing, type Locale } from "@/i18n/routing";
 import { alternates, siteUrl } from "@/lib/seo";
+import { inter, plexArabic } from "../fonts";
 import "../globals.css";
-
-const inter = Inter({ subsets: ["latin"], variable: "--font-inter", display: "swap" });
-const plexArabic = IBM_Plex_Sans_Arabic({
-  subsets: ["arabic"],
-  weight: ["400", "500", "600", "700"],
-  variable: "--font-plex-arabic",
-  display: "swap",
-});
 
 // No page is rendered at build time (no database access during `next build`); each one is
 // rendered on its first visit and then revalidated (ISR).

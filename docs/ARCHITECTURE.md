@@ -44,6 +44,17 @@ cart in Phase 4.
   `/api/search/count` (live count in the mobile filter sheet). All read-only, anon key.
 * `src/proxy.ts` (Next 16's replacement for middleware) handles locale routing via next-intl.
 
+### Back office (Phase 5)
+
+* `/admin` sits outside locale routing. `src/proxy.ts` refreshes the Supabase session cookie for `/admin/*` and
+  sends signed-out visitors to `/admin/login`; every admin page and Server Action calls `requireStaff()`
+  (`src/server/auth.ts`, checked against the Auth server and `profiles.role`), and RLS enforces the same rule
+  in the database. All writes use the staff member's session (no service-role key).
+* Status changes go through `set_order_status()`, stock through `adjust_stock()` (audited movements); products,
+  prices, delivery rates, printers, compatibility and promo codes use the staff RLS policies.
+* After a change the storefront's cached pages are revalidated (`revalidatePath("/[locale]", "layout")`).
+* Local testing: `scripts/local-stack.sh` runs GoTrue (Supabase Auth) so sign-in and RLS are exercised for real.
+
 ### Cart and cash-on-delivery checkout (Phase 4, guest)
 
 * The cart is a cookie (`ri_cart`) holding product ids and quantities only: no prices, nothing secret. Server
@@ -126,5 +137,5 @@ tests/db                        SQL test suite (this phase)
 | 2. Frontend foundation | Next.js app, layout, home, listings, product page, i18n/RTL | **Done — 16 unit tests, 11 Playwright tests (desktop + mobile)** |
 | 3. Product engine wiring | Catalog/search/compatibility pages on the real database | **Read side done with Phase 2** (search, filters, autocomplete, Find your ink, verified printers). Remaining: sitemap, admin-triggered cache revalidation |
 | 4. Shopping & checkout | Cart, accounts, checkout, order pages | **Guest cart, COD checkout, confirmation and tracking done** (3 Playwright tests). Remaining: customer accounts, order history, wishlist, B2B pages |
-| 5. Administration | Back office | Not started (permissions and functions done) |
+| 5. Administration | Back office | **Done for daily operations** (3 Playwright tests): orders, products and bulk publishing, stock, printers and compatibility, categories and brands, delivery, promo codes. Remaining: photo upload, banners/collections, quotes and business accounts, returns, roles UI, CSV import/export |
 | 6. Optimisation & verification | SEO, performance, E2E tests (Playwright) | Not started |

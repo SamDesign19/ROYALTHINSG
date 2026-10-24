@@ -10,8 +10,15 @@ export default defineConfig({
   reporter: process.env.CI ? [["github"], ["list"]] : "list",
   use: { baseURL: "http://localhost:3000", trace: "retain-on-failure" },
   projects: [
-    { name: "desktop", use: { ...devices["Desktop Chrome"], viewport: { width: 1366, height: 900 } }, testIgnore: /mobile/ },
+    { name: "desktop", use: { ...devices["Desktop Chrome"], viewport: { width: 1366, height: 900 } }, testIgnore: /mobile|admin/ },
     { name: "mobile", use: { ...devices["Pixel 7"] }, testMatch: /mobile/ },
+    // The back-office tests change shared data (publish a product, open delivery), so they run last.
+    {
+      name: "admin",
+      use: { ...devices["Desktop Chrome"], viewport: { width: 1440, height: 900 } },
+      testMatch: /admin/,
+      dependencies: ["desktop", "mobile"],
+    },
   ],
   webServer: {
     command: "npm run start",

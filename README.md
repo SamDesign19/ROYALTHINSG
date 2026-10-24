@@ -3,9 +3,10 @@
 Online store for printers, ink, toner and printing supplies, starting in Algeria (DZD, cash on delivery,
 58 wilayas) in Arabic, French and English.
 
-**Current state: the storefront (catalog, search, product pages, "Find your ink", AR/FR/EN with RTL) and
-cash-on-delivery ordering (cart, checkout, confirmation, order tracking) run on the Phase 1 database.**
-Customer accounts, B2B pages and the admin are next; see [Phase status](docs/ARCHITECTURE.md#phase-status).
+**Current state: the storefront (catalog, search, product pages, "Find your ink", AR/FR/EN with RTL),
+cash-on-delivery ordering (cart, checkout, confirmation, order tracking) and the back office (`/admin`: orders,
+products, stock, printers and compatibility, categories and brands, delivery, promo codes) run on the Phase 1
+database.** Customer accounts and B2B pages are next; see [Phase status](docs/ARCHITECTURE.md#phase-status).
 
 ## What works today
 
@@ -55,13 +56,44 @@ All data comes from the database through the Phase 1 functions and RLS (anon key
 `scripts/local-stack.sh up` starts PostgreSQL and PostgREST in Docker, applies every migration and the
 reference seed, loads the **test-only** fixtures (`tests/db/02_fixtures.sql`, invented data) and exposes them
 like a Supabase project on `http://127.0.0.1:54321`. It prints the variables for `.env.local`
-(also written to `.local-stack/env`). Needs Docker, `psql` and Node. Auth and Storage are not emulated.
+(also written to `.local-stack/env`). Needs Docker, `psql` and Node. Supabase Auth runs too (GoTrue), with a
+**test-only** admin account `admin@royalink.test` / `local-admin-password`. Storage is not emulated.
 
 ```bash
 scripts/local-stack.sh up && cp .local-stack/env .env.local
 npm run build && npm run test:e2e
 scripts/local-stack.sh down
 ```
+
+## Back office (`/admin`)
+
+French-only, at `https://<site>/admin`. Staff sign in with e-mail and password (Supabase Auth); everything
+they do goes through their own session, so the database's RLS policies decide what is allowed, and no
+service-role key is needed on the host.
+
+Create a staff account (Supabase dashboard):
+
+1. **Authentication → Users → Add user → Create new user**: e-mail + password, tick *Auto Confirm User*.
+2. **SQL editor**: `update profiles set role = 'admin' where id = (select id from auth.users where email = 'you@example.com');`
+   (use `'staff'` for team members who must not manage roles).
+
+| Page | What it does |
+|---|---|
+| Tableau de bord | Orders to handle, today's orders, 30-day revenue, stock alerts, best sellers, drafts to review |
+| Commandes | Filter by status, search; order page: confirm (issues the invoice number), prepare, ship, deliver (marks COD paid), cancel (restocks), internal note, print |
+| Produits | Search, filter (status, category, missing price), bulk publish / draft / featured / archive; edit page: all fields in AR/FR/EN, stock movements, low-stock threshold, volume prices, printer compatibility (verified or not) |
+| Stock | Alerts and the latest movements |
+| Imprimantes | Brands → series → models for "Find your ink" |
+| Catégories & marques | Names in three languages, order, visibility; brands and "makes printers" |
+| Livraison | Fees per wilaya and method (fill-all helper), free-delivery threshold, delivery times, pickup points |
+| Codes promo | Percent, fixed or free shipping, minimum, limits, end date |
+
+Not yet in the back office: product photo upload, banners and collections, quotations and business accounts,
+returns, user roles (SQL above) and CSV import/export.
+
+Supabase Auth allows public sign-up by default. Customer accounts are not used yet, and a self-registered account
+has the `customer` role (no back-office access, RLS applies), but you can turn sign-up off in
+**Authentication → Providers → Email** until accounts are added to the store.
 
 ## Import the ROYALINK catalog
 
@@ -139,8 +171,9 @@ If any check other than the history row fails, do not repair. Compare the projec
 
 ## Known limitations
 
-* Ordering is guest-only (no customer accounts yet), cash on delivery only. No B2B pages or admin yet: orders
-  are managed in Supabase (`set_order_status()`), until the back office (Phase 5).
+* Ordering is guest-only (no customer accounts yet), cash on delivery only. No B2B pages yet.
+* The back office is French-only and has no photo upload yet (images go into the `product-images` bucket and
+  `product_images` table from the Supabase dashboard).
 * The order rate limit is per server instance (in memory), so on serverless hosting it only slows down abuse.
 * The home page has no "Best sellers" row: the public API cannot tell real sales from zero sales, and the
   row is not shown with invented popularity. Brand logos are not displayed yet (no bucket defined for them).
