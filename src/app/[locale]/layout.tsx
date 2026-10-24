@@ -6,7 +6,7 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Footer } from "@/components/store/footer";
 import { Header } from "@/components/store/header";
 import { directionOf, routing, type Locale } from "@/i18n/routing";
-import { alternates } from "@/lib/seo";
+import { alternates, siteUrl } from "@/lib/seo";
 import "../globals.css";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter", display: "swap" });
@@ -28,7 +28,7 @@ export async function generateMetadata({ params }: LayoutProps<"/[locale]">): Pr
   if (!hasLocale(routing.locales, locale)) return {};
   const t = await getTranslations({ locale, namespace: "meta" });
   return {
-    metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000"),
+    metadataBase: new URL(siteUrl()),
     title: { default: t("title"), template: t("titleTemplate") },
     description: t("description"),
     applicationName: "ROYAL INK",

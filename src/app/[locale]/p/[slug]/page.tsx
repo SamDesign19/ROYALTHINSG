@@ -19,7 +19,7 @@ import { Link } from "@/i18n/navigation";
 import type { Locale } from "@/i18n/routing";
 import { formatInteger } from "@/lib/format";
 import { pick, type Localized } from "@/lib/localized";
-import { alternates } from "@/lib/seo";
+import { alternates, siteUrl } from "@/lib/seo";
 import { publicStorageUrl } from "@/lib/storage";
 import { cn } from "@/lib/utils";
 
@@ -346,7 +346,7 @@ async function CompatibilityList({ printers }: { printers: CompatiblePrinter[] }
 }
 
 function ProductJsonLd({ product, name, images, locale }: { product: ProductDetail; name: string; images: string[]; locale: Locale }) {
-  const site = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
+  const site = siteUrl();
   const data = {
     "@context": "https://schema.org",
     "@type": "Product",
