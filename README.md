@@ -3,8 +3,9 @@
 Online store for printers, ink, toner and printing supplies, starting in Algeria (DZD, cash on delivery,
 58 wilayas) in Arabic, French and English.
 
-**Current state: Phase 1 complete (database, business logic, security, design system).**
-The storefront and admin (Next.js) are not built yet; see [Phase status](docs/ARCHITECTURE.md#phase-status).
+**Current state: Phase 2 complete — the Next.js storefront (catalog, search, product pages, "Find your ink",
+AR/FR/EN with RTL) runs on the Phase 1 database.** Cart, checkout, accounts and the admin are next;
+see [Phase status](docs/ARCHITECTURE.md#phase-status).
 
 ## What works today
 
@@ -25,6 +26,42 @@ The whole commerce core runs in PostgreSQL (Supabase) and is covered by an autom
 * B2B: business accounts (NIF/NIS/RC), approved-business volume prices, quotation requests.
 * Reviews (moderated, off by default), banners, collections, settings.
 * Security: Row Level Security on every table; orders and quotations only through validated functions.
+
+## Storefront (Next.js)
+
+Next.js 16 (App Router, Turbopack) · React 19 · Tailwind CSS 4 · next-intl 4 · Supabase JS. Node 20.9+.
+
+```bash
+npm install
+cp .env.example .env.local      # fill in the Supabase URL and anon key
+npm run dev                     # http://localhost:3000 → redirects to /ar (or the browser's language)
+```
+
+Pages: home, `/search`, `/c/[category]`, `/brands`, `/brands/[brand]`, `/p/[slug]`, `/find-your-ink`,
+`/find-your-ink/printer/[slug]`, `/collections/[slug]`, each under `/ar`, `/fr` and `/en`.
+All data comes from the database through the Phase 1 functions and RLS (anon key only); nothing is hard-coded.
+
+`NEXT_PUBLIC_*` variables are inlined at build time, so set them before `npm run build` on the host.
+
+| Command | What it does |
+|---|---|
+| `npm run lint` / `npm run typecheck` | ESLint, TypeScript (generates route types first) |
+| `npm test` | Unit tests (Vitest) |
+| `npm run build && npm start` | Production build; no database access at build time |
+| `npm run test:e2e` | Playwright tests against the local stack and a production build |
+
+### Local stack without a Supabase project
+
+`scripts/local-stack.sh up` starts PostgreSQL and PostgREST in Docker, applies every migration and the
+reference seed, loads the **test-only** fixtures (`tests/db/02_fixtures.sql`, invented data) and exposes them
+like a Supabase project on `http://127.0.0.1:54321`. It prints the variables for `.env.local`
+(also written to `.local-stack/env`). Needs Docker, `psql` and Node. Auth and Storage are not emulated.
+
+```bash
+scripts/local-stack.sh up && cp .local-stack/env .env.local
+npm run build && npm run test:e2e
+scripts/local-stack.sh down
+```
 
 ## Run the database tests
 
@@ -56,7 +93,12 @@ CI runs the same script on every push (`.github/workflows/database.yml`).
 
 ## Known limitations
 
-* No web frontend yet (Phases 2–6). The build environment used so far could not reach the npm registry.
+* No cart, checkout, customer accounts, B2B pages or admin yet (Phases 4–5): product pages show price and
+  availability but have no "Add to cart" button, and the header has no account or cart icon.
+* The home page has no "Best sellers" row: the public API cannot tell real sales from zero sales, and the
+  row is not shown with invented popularity. Brand logos are not displayed yet (no bucket defined for them).
+* Listing pages (search, category, brand, printer) render per request without a data cache; home, product,
+  brand-index, collection and "Find your ink" pages are cached and revalidated every 60–300 s.
 * Communes, delivery fees, pickup points, products, prices, stock and compatibility are empty until entered by the business.
 * Only cash on delivery; no online payment until a provider is contracted.
-* Tested against PostgreSQL 16 with a Supabase shim, not yet against a live Supabase project.
+* Tested against PostgreSQL 16 with a Supabase shim and PostgREST (the storefront too), not yet against a live Supabase project.

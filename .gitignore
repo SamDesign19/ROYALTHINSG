@@ -7,3 +7,8 @@ out/
 .DS_Store
 *.log
 supabase/.temp/
+.local-stack/
+next-env.d.ts
+*.tsbuildinfo
+test-results/
+playwright-report/

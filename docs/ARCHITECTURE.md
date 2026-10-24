@@ -30,8 +30,19 @@ atomic and cannot be bypassed from a browser:
 | `product_availability()` | Public in-stock / low-stock flags without exposing quantities. |
 | `find_guest_order()` | Guest order tracking by order number + phone. |
 
-The Next.js server layer (planned, Phase 2+) calls these through the Supabase client and adds
-input validation (zod), rate limiting and the guest-cart cookie.
+The Next.js server layer calls these through the Supabase client (`src/server/supabase.ts`) and validates
+input with zod (`src/features/search/params.ts`). Rate limiting and the guest-cart cookie arrive with the
+cart in Phase 4.
+
+### Rendering and caching (Phase 2)
+
+* Catalog reads use an anonymous client that sends no cookies, so pages can be cached: home, product,
+  brand index, collections and "Find your ink" are rendered on first visit and revalidated (ISR, 60–300 s).
+  No page is prerendered at build time, so `next build` never needs the database.
+* Pages driven by the query string (search, category, brand, printer) are rendered per request.
+* Route handlers: `/api/suggest` (autocomplete), `/api/printers` (Find your ink selector),
+  `/api/search/count` (live count in the mobile filter sheet). All read-only, anon key.
+* `src/proxy.ts` (Next 16's replacement for middleware) handles locale routing via next-intl.
 
 ### Security model (implemented in `supabase/migrations/*_security.sql`)
 
@@ -43,7 +54,7 @@ input validation (zod), rate limiting and the guest-cart cookie.
 * Stock quantities, promo codes, analytics and unverified compatibility are staff-only.
 * The Supabase **service role key is used only in server code** (guest carts, webhooks) and never shipped to the browser.
 
-## Planned code layout (Phase 2+)
+## Code layout
 
 ```
 src/
@@ -100,8 +111,8 @@ tests/db                        SQL test suite (this phase)
 | Phase | Scope | Status |
 |---|---|---|
 | 1. Architecture & design system | Schema, business functions, RLS, reference data, design tokens, docs | **Done — 107 SQL checks + concurrency test passing** |
-| 2. Frontend foundation | Next.js app, layout, home, listings, product page, i18n/RTL | Not started — blocked: npm registry unreachable from the build environment |
-| 3. Product engine wiring | Catalog/search/compatibility pages on the real database | Not started (database side done) |
+| 2. Frontend foundation | Next.js app, layout, home, listings, product page, i18n/RTL | **Done — 16 unit tests, 11 Playwright tests (desktop + mobile)** |
+| 3. Product engine wiring | Catalog/search/compatibility pages on the real database | **Read side done with Phase 2** (search, filters, autocomplete, Find your ink, verified printers). Remaining: sitemap, admin-triggered cache revalidation |
 | 4. Shopping & checkout | Cart, accounts, checkout, order pages | Not started (database side done) |
 | 5. Administration | Back office | Not started (permissions and functions done) |
 | 6. Optimisation & verification | SEO, performance, E2E tests (Playwright) | Not started |

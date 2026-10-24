@@ -1,4 +1,4 @@
-/* ROYAL INK design tokens. See docs/DESIGN_SYSTEM.md. Mapped into Tailwind's theme in Phase 2. */
+/* ROYAL INK design tokens. See docs/DESIGN_SYSTEM.md. Mapped into Tailwind's theme in src/app/globals.css. */
 :root {
   --ri-bg: #ffffff;
   --ri-surface: #f6f6f7;

@@ -4,7 +4,10 @@ Direction: a premium technology brand. Quiet white surfaces, near-black type, on
 (primary actions, price emphasis, focus). Product imagery carries the page; UI chrome stays out of the way.
 Original to ROYAL INK — no borrowed brand assets or layouts.
 
-Tokens live in [`design/tokens.css`](../design/tokens.css) and will be mapped into Tailwind's theme in Phase 2.
+Tokens live in [`design/tokens.css`](../design/tokens.css) and are mapped into Tailwind's theme in
+[`src/app/globals.css`](../src/app/globals.css) (`bg-bg`, `bg-surface`, `text-ink`, `text-ink-2`, `border-line`,
+`bg-accent` / `text-accent-ink` for the red, `text-success`, `text-warning`, `rounded-control|card|media`,
+`shadow-1|2`). Primitives are in `src/components/ui`, store components in `src/components/store`.
 
 ## Colour
 
