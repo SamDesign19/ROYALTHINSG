@@ -2,7 +2,7 @@
   "meta": {
     "title": "ROYAL INK — Ink, toner and printers in Algeria",
     "titleTemplate": "%s · ROYAL INK",
-    "description": "Original and compatible ink, toner, printers and printing supplies. Find the right cartridge for your printer. Delivery to the 58 wilayas, cash on delivery."
+    "description": "Original and compatible ink, toner, printers and printing supplies. Find the right cartridge for your printer. Delivery to the 69 wilayas, cash on delivery."
   },
   "common": {
     "skipToContent": "Skip to content",
@@ -40,7 +40,7 @@
     "shop": "Shop",
     "help": "Services",
     "cod": "Cash on delivery",
-    "delivery": "Delivery to the 58 wilayas",
+    "delivery": "Delivery to the 69 wilayas",
     "verified": "Verified printer compatibility",
     "rights": "© {year} ROYAL INK. All rights reserved."
   },
@@ -61,7 +61,7 @@
   "trust": {
     "cod": "Cash on delivery",
     "codText": "Pay when you receive your order.",
-    "wilayas": "58 wilayas",
+    "wilayas": "69 wilayas",
     "wilayasText": "Home delivery or pickup point.",
     "origin": "Original or compatible",
     "originText": "Always clearly labelled on every product.",
@@ -174,7 +174,7 @@
     "noImage": "No image yet",
     "image": "Image {index} of {count}",
     "showImage": "Show image {index}",
-    "codDelivery": "Cash on delivery · Delivery to the 58 wilayas",
+    "codDelivery": "Cash on delivery · Delivery to the 69 wilayas",
     "addToCart": "Add to cart",
     "added": "Added to cart",
     "quantity": "Quantity",

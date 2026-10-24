@@ -1,7 +1,7 @@
 # ROYAL INK — commerce platform
 
 Online store for printers, ink, toner and printing supplies, starting in Algeria (DZD, cash on delivery,
-58 wilayas) in Arabic, French and English.
+69 wilayas) in Arabic, French and English.
 
 **Current state: the storefront (catalog, search, product pages, "Find your ink", AR/FR/EN with RTL),
 cash-on-delivery ordering (cart, checkout, confirmation, order tracking) and the back office (`/admin`: orders,
@@ -122,6 +122,18 @@ on conflict (wilaya_code, method) do update set fee_dzd = excluded.fee_dzd;
 ```
 
 Pickup needs rows in `pickup_points` plus a `pickup` rate for that wilaya.
+
+## Wilayas and communes
+
+The seed has 69 wilayas (58 + the 11 of the 2025/2026 reform, codes 59–69) and 1 541 communes for
+wilayas 01–58. The commune field at checkout is optional; it lists the communes of the chosen wilaya.
+
+For a project created before this change, run `supabase/seed/01_reference.sql` and
+`supabase/seed/02_communes.sql` in the SQL editor (both only add what is missing). New wilayas need a
+delivery rate in **Admin → Livraison** before customers can choose them.
+
+Communes of wilayas 59–69 are not assigned yet: the list received for them contains communes that
+belong elsewhere, so they stay under their current wilaya until the official composition is confirmed.
 
 ## Run the database tests
 

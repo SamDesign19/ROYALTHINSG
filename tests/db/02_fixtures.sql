@@ -63,11 +63,11 @@ insert into product_compatibility (product_id, printer_id, verified, source, ver
   ('40000000-0000-0000-0000-000000000003', '30000000-0000-0000-0000-000000000001', false, 'supplier claim', null);
 
 insert into communes (id, wilaya_code, name, postal_code) values
-  (1, 19, '{"fr": "Sétif", "ar": "سطيف"}', '19000'),
-  (2, 19, '{"fr": "El Eulma", "ar": "العلمة"}', '19600'),
-  (3, 16, '{"fr": "Alger Centre", "ar": "الجزائر الوسطى"}', '16000');
+  (900001, 19, '{"fr": "Sétif (test)", "ar": "سطيف"}', '19000'),
+  (900002, 19, '{"fr": "El Eulma (test)", "ar": "العلمة"}', '19600'),
+  (900003, 16, '{"fr": "Alger Centre (test)", "ar": "الجزائر الوسطى"}', '16000');
 insert into pickup_points (id, wilaya_code, commune_id, name, address) values
-  ('50000000-0000-0000-0000-000000000001', 19, 2, 'Test pickup', 'Test address');
+  ('50000000-0000-0000-0000-000000000001', 19, 900002, 'Test pickup', 'Test address');
 insert into delivery_rates (wilaya_code, method, fee_dzd, free_over_dzd) values
   (19, 'home', 400, 50000),
   (19, 'pickup', 0, null),

@@ -1,6 +1,6 @@
 # Architecture
 
-ROYAL INK is a store for printers, ink, toner and printing supplies, starting in Algeria (DZD, 58 wilayas,
+ROYAL INK is a store for printers, ink, toner and printing supplies, starting in Algeria (DZD, 69 wilayas,
 cash on delivery), in Arabic (RTL), French and English.
 
 ## Stack and why

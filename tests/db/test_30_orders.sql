@@ -1,7 +1,7 @@
 -- Checkout: server-side pricing, stock, delivery, promotions, status workflow.
 \set QUIET on
 \set customer '{"name": "Amina B.", "phone": "+213 555 12 34 56"}'
-\set home19 '{"method": "home", "wilaya_code": 19, "commune_id": 2, "address_line": "Cité 100 logements"}'
+\set home19 '{"method": "home", "wilaya_code": 19, "commune_id": 900002, "address_line": "Cité 100 logements"}'
 
 -- Guest order: 2 x Canon 057H at 18 000 + 400 delivery to Sétif.
 set role anon;
@@ -32,7 +32,7 @@ select test.raises($$select place_order('[{"product_id": "40000000-0000-0000-000
   '{"name": "x", "phone": "0555000000"}', '{"method": "home", "wilaya_code": 11, "address_line": "x"}')$$,
   'delivery_unavailable', 'wilaya without a configured rate is refused');
 select test.raises($$select place_order('[{"product_id": "40000000-0000-0000-0000-000000000004", "quantity": 1}]',
-  '{"name": "x", "phone": "0555000000"}', '{"method": "home", "wilaya_code": 19, "commune_id": 3, "address_line": "x"}')$$,
+  '{"name": "x", "phone": "0555000000"}', '{"method": "home", "wilaya_code": 19, "commune_id": 900003, "address_line": "x"}')$$,
   'invalid_commune', 'commune must belong to the wilaya');
 select test.raises($$select place_order('[{"product_id": "40000000-0000-0000-0000-000000000004", "quantity": 1}]',
   '{"name": "x", "phone": "0555000000"}', '{"method": "home", "wilaya_code": 19}')$$,

@@ -46,7 +46,7 @@ union all
 select 'policies (>= 61)', count(*) >= 61, count(*)::text || ' found'
   from pg_policies where schemaname = 'public'
 union all
-select 'seed: 58 wilayas', (select count(*) from public.wilayas where code between 1 and 58) = 58,
+select 'seed: 69 wilayas', (select count(*) from public.wilayas where code between 1 and 69) = 69,
        (select count(*) from public.wilayas)::text || ' rows'
 union all
 select 'seed: 35 categories', (select count(*) from public.categories where slug in (
@@ -57,6 +57,9 @@ select 'seed: 35 categories', (select count(*) from public.categories where slug
          'power-protection', 'software', 'office-equipment', 'scanners', 'projectors', 'duplicators',
          'counting-machines', 'office-misc', 'office-furniture')) = 35,
        (select count(*) from public.categories)::text || ' rows'
+union all
+select 'seed: communes (1541)', (select count(*) from public.communes where wilaya_code between 1 and 58) >= 1541,
+       (select count(*) from public.communes)::text || ' rows'
 union all
 select 'seed: settings', (select count(*) from public.settings where key in ('reviews_enabled', 'store')) = 2, ''
 union all

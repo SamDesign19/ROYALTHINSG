@@ -101,7 +101,7 @@ test("catalog: publish a product, stock, printer compatibility, delivery and pro
   await page.getByLabel("Domicile DA").fill("650");
   await page.getByRole("button", { name: "Appliquer à toutes" }).first().click();
   await page.getByRole("button", { name: "Enregistrer les tarifs" }).click();
-  await expect(page.getByText(/58 wilaya\(s\) ouvertes à la commande/)).toBeVisible();
+  await expect(page.getByText(/69 wilaya\(s\) ouvertes à la commande/)).toBeVisible();
   await page.goto("/admin/promos");
   await page.getByLabel("Code", { exact: true }).fill("rentree15");
   await page.getByLabel("Valeur").fill("15");
