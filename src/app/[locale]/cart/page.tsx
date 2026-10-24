@@ -76,7 +76,7 @@ export default async function CartPage({ params }: PageProps<"/[locale]/cart">) 
                       <p className="font-medium text-ink-2">{name}</p>
                     )}
                     {line.status !== "ok" ? (
-                      <p className="text-sm font-medium text-accent">{line.status === "unavailable" ? t("lineUnavailable") : t("lineOutOfStock")}</p>
+                      <p className="text-sm font-medium text-danger">{line.status === "unavailable" ? t("lineUnavailable") : t("lineOutOfStock")}</p>
                     ) : null}
                   </div>
                   <div className="flex items-center justify-between gap-4 sm:flex-col sm:items-end">

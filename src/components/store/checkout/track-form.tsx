@@ -41,7 +41,7 @@ export function TrackForm({ defaultNumber }: { defaultNumber: string }) {
 
       <div aria-live="polite">
         {state?.error ? (
-          <p role="alert" className="text-sm font-medium text-accent">
+          <p role="alert" className="text-sm font-medium text-danger">
             {state.error === "rate_limited" ? te("rate_limited") : t("notFound")}
           </p>
         ) : null}
@@ -58,7 +58,7 @@ export function TrackForm({ defaultNumber }: { defaultNumber: string }) {
               </div>
             </div>
             {order.status === "cancelled" || order.status === "returned" ? (
-              <p className="font-medium text-accent">{ts(order.status)}</p>
+              <p className="font-medium text-danger">{ts(order.status)}</p>
             ) : (
               <ol className="grid gap-3 sm:grid-cols-5">
                 {FLOW.map((s, i) => {

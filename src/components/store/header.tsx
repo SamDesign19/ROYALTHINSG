@@ -64,7 +64,7 @@ export async function Header() {
               </Link>
             </li>
             <li>
-              <Link href="/find-your-ink" className="inline-flex min-h-11 items-center whitespace-nowrap rounded-control px-3 text-sm font-medium text-accent hover:bg-surface">
+              <Link href="/find-your-ink" className="inline-flex min-h-11 items-center whitespace-nowrap rounded-control bg-accent px-3 text-sm font-medium text-accent-ink hover:opacity-90">
                 {t("findYourInk")}
               </Link>
             </li>

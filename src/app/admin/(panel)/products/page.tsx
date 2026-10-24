@@ -86,14 +86,14 @@ export default async function ProductsPage({ searchParams }: PageProps<"/admin/p
           <tbody>
             {rows.map((p) => (
               <tr key={p.id} className="hover:bg-surface">
-                <td><input type="checkbox" name="id" value={p.id} aria-label={`Sélectionner ${pick(p.name, "fr")}`} className="size-4 accent-[var(--ri-red)]" /></td>
+                <td><input type="checkbox" name="id" value={p.id} aria-label={`Sélectionner ${pick(p.name, "fr")}`} className="size-4 accent-ink" /></td>
                 <td className="max-w-md">
                   <Link href={`/admin/products/${p.id}`} className="font-medium hover:underline">{pick(p.name, "fr")}</Link>
                   <span className="block text-xs text-ink-2">{[p.brand?.name, p.model_code].filter(Boolean).join(" · ")}{p.is_featured ? " · ★ À la une" : ""}</span>
                 </td>
                 <td className="whitespace-nowrap text-ink-2">{p.sku}</td>
                 <td className="text-ink-2">{pick(p.category?.name, "fr")}</td>
-                <td className={p.price_dzd === null ? "text-end text-accent" : "whitespace-nowrap text-end"}>{p.price_dzd === null ? "Sans prix" : da(p.price_dzd)}</td>
+                <td className={p.price_dzd === null ? "text-end text-danger" : "whitespace-nowrap text-end"}>{p.price_dzd === null ? "Sans prix" : da(p.price_dzd)}</td>
                 <td className="text-end tabular-nums">{p.inventory?.quantity ?? 0}</td>
                 <td><Pill tone={PRODUCT_STATUS[p.status]?.tone}>{PRODUCT_STATUS[p.status]?.label}</Pill></td>
               </tr>

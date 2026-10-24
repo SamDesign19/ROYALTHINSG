@@ -42,7 +42,7 @@ const TONES = {
   neutral: "bg-surface text-ink-2",
   success: "bg-success/10 text-success",
   warning: "bg-warning/10 text-warning",
-  danger: "bg-accent/10 text-accent",
+  danger: "bg-danger/10 text-danger",
   ink: "bg-ink text-bg",
 } as const;
 
@@ -68,7 +68,7 @@ export const PRODUCT_STATUS: Record<string, { label: string; tone: keyof typeof 
 
 export function Notice({ tone = "success", children }: { tone?: "success" | "danger"; children: React.ReactNode }) {
   return (
-    <p role={tone === "danger" ? "alert" : "status"} className={cn("rounded-control px-3 py-2 text-sm font-medium", tone === "danger" ? "bg-accent/10 text-accent" : "bg-success/10 text-success")}>
+    <p role={tone === "danger" ? "alert" : "status"} className={cn("rounded-control px-3 py-2 text-sm font-medium", tone === "danger" ? "bg-danger/10 text-danger" : "bg-success/10 text-success")}>
       {children}
     </p>
   );

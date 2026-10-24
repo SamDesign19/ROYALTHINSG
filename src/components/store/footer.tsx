@@ -14,7 +14,7 @@ export async function Footer() {
   const th = await getTranslations("header");
   const tree = await getCategoryTree();
   return (
-    <footer className="mt-24 border-t border-line bg-surface">
+    <footer className="ri-dark mt-24 border-t border-line bg-bg text-ink">
       <div className="container-ri grid gap-10 py-12 md:grid-cols-[1.5fr_1fr_1fr]">
         <div className="max-w-sm space-y-4">
           <Logo />

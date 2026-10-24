@@ -27,7 +27,7 @@ export function LoginForm({ next }: { next: string }) {
         <Label htmlFor="password">Mot de passe</Label>
         <Input id="password" name="password" type="password" autoComplete="current-password" required />
       </div>
-      {state?.error ? <p role="alert" className="text-sm font-medium text-accent">{state.error}</p> : null}
+      {state?.error ? <p role="alert" className="text-sm font-medium text-danger">{state.error}</p> : null}
       <Button type="submit" className="w-full" disabled={pending}>
         {pending ? <Loader2 className="animate-spin" aria-hidden /> : null}
         Se connecter

@@ -92,7 +92,7 @@ export default async function ProductPage({ params }: PageProps<"/admin/products
                   {(movements ?? []).map((m) => (
                     <li key={m.id} className="flex justify-between gap-3">
                       <span className="text-ink-2">{dateTime(m.created_at)} · {REASONS[m.reason] ?? m.reason}{m.note ? ` · ${m.note}` : ""}</span>
-                      <span className={m.delta > 0 ? "shrink-0 text-success" : "shrink-0 text-accent"}>{m.delta > 0 ? "+" : ""}{m.delta} → {m.quantity_after}</span>
+                      <span className={m.delta > 0 ? "shrink-0 text-success" : "shrink-0 text-danger"}>{m.delta > 0 ? "+" : ""}{m.delta} → {m.quantity_after}</span>
                     </li>
                   ))}
                 </ul>

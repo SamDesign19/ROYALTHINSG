@@ -52,7 +52,7 @@ export default async function InventoryPage() {
                     <td className="whitespace-nowrap text-ink-2">{dateTime(m.created_at)}</td>
                     <td>{m.product ? <Link href={`/admin/products/${m.product.id}`} className="hover:underline">{pick(m.product.name, "fr")}</Link> : "—"}</td>
                     <td className="text-ink-2">{REASONS[m.reason] ?? m.reason}{m.note ? ` · ${m.note}` : ""}</td>
-                    <td className={m.delta > 0 ? "text-end text-success" : "text-end text-accent"}>{m.delta > 0 ? "+" : ""}{m.delta}</td>
+                    <td className={m.delta > 0 ? "text-end text-success" : "text-end text-danger"}>{m.delta > 0 ? "+" : ""}{m.delta}</td>
                     <td className="text-end tabular-nums">{m.quantity_after}</td>
                   </tr>
                 ))}

@@ -54,7 +54,7 @@ export function ProductCard({ product, priority }: { product: ProductCardData; p
         </div>
       </div>
       {/* Keyboard focus ring for the stretched link. */}
-      <span aria-hidden className="pointer-events-none absolute inset-0 rounded-card ring-accent group-has-[a:focus-visible]:ring-2" />
+      <span aria-hidden className="pointer-events-none absolute inset-0 rounded-card ring-ink group-has-[a:focus-visible]:ring-2" />
     </article>
   );
 }
