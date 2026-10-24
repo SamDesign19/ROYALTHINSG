@@ -14,7 +14,7 @@ let publicClient: SupabaseClient | null = null;
 export function createPublicClient(): SupabaseClient {
   if (publicClient) return publicClient;
   const env = serverEnv();
-  publicClient = createClient(env.NEXT_PUBLIC_SUPABASE_URL, env.NEXT_PUBLIC_SUPABASE_ANON_KEY, {
+  publicClient = createClient(env.NEXT_PUBLIC_SUPABASE_URL, env.SUPABASE_PUBLIC_KEY, {
     auth: { persistSession: false, autoRefreshToken: false, detectSessionInUrl: false },
   });
   return publicClient;
@@ -24,7 +24,7 @@ export function createPublicClient(): SupabaseClient {
 export async function createSessionClient(): Promise<SupabaseClient> {
   const env = serverEnv();
   const store = await cookies();
-  return createServerClient(env.NEXT_PUBLIC_SUPABASE_URL, env.NEXT_PUBLIC_SUPABASE_ANON_KEY, {
+  return createServerClient(env.NEXT_PUBLIC_SUPABASE_URL, env.SUPABASE_PUBLIC_KEY, {
     cookies: {
       getAll: () => store.getAll(),
       setAll: (list) => {
