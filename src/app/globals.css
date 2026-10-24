@@ -1,0 +1,151 @@
+@import "tailwindcss";
+/* Single source of truth for colours, radii, shadows and motion (docs/DESIGN_SYSTEM.md). */
+@import "../../design/tokens.css";
+
+@theme inline {
+  --color-bg: var(--ri-bg);
+  --color-surface: var(--ri-surface);
+  --color-ink: var(--ri-ink);
+  --color-ink-2: var(--ri-ink-2);
+  --color-line: var(--ri-line);
+  --color-accent: var(--ri-red);
+  --color-accent-ink: var(--ri-red-ink);
+  --color-success: var(--ri-success);
+  --color-warning: var(--ri-warning);
+
+  --font-sans: var(--font-inter), var(--ri-font-latin);
+  --font-arabic: var(--font-plex-arabic), var(--font-inter), var(--ri-font-arabic);
+
+  --radius-control: var(--ri-radius-control);
+  --radius-card: var(--ri-radius-card);
+  --radius-media: var(--ri-radius-media);
+
+  --shadow-1: var(--ri-shadow-1);
+  --shadow-2: var(--ri-shadow-2);
+
+  --ease-ri: var(--ri-ease);
+  --container-content: var(--ri-content);
+}
+
+@theme {
+  /* Type scale (rem): 0.75 · 0.875 · 1 · 1.125 · 1.375 · 1.75 · 2.25 · 3 · 4 */
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.375rem;
+  --text-2xl: 1.75rem;
+  --text-3xl: 2.25rem;
+  --text-4xl: 3rem;
+  --text-5xl: 4rem;
+  --text-xl--line-height: 1.3;
+  --text-2xl--line-height: 1.2;
+  --text-3xl--line-height: 1.1;
+  --text-4xl--line-height: 1.1;
+  --text-5xl--line-height: 1.05;
+}
+
+@layer base {
+  html {
+    color-scheme: light dark;
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    background: var(--color-bg);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+  html:lang(ar) body {
+    font-family: var(--font-arabic);
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+  }
+  ::selection {
+    background: color-mix(in srgb, var(--color-accent) 20%, transparent);
+  }
+}
+
+@layer components {
+  /* Display headings: weight 600, tight tracking for Latin only. */
+  .display {
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    text-wrap: balance;
+  }
+  html:lang(ar) .display {
+    letter-spacing: 0;
+    line-height: 1.25;
+  }
+  /* Product codes and SKUs: tabular figures, always a left-to-right run. */
+  .code {
+    font-variant-numeric: tabular-nums;
+    unicode-bidi: isolate;
+    direction: ltr;
+  }
+}
+
+@utility transition-ri {
+  transition-property: opacity, transform;
+  transition-duration: var(--ri-fast);
+  transition-timing-function: var(--ri-ease);
+}
+
+@utility container-ri {
+  margin-inline: auto;
+  width: 100%;
+  max-width: var(--ri-content);
+  padding-inline: 1rem;
+  @media (width >= 40rem) {
+    padding-inline: 1.5rem;
+  }
+  @media (width >= 64rem) {
+    padding-inline: 2rem;
+  }
+}
+
+/* Section rhythm 64 / 96 / 128 px (mobile / tablet / desktop). */
+@utility section-y {
+  padding-block: 4rem;
+  @media (width >= 48rem) {
+    padding-block: 6rem;
+  }
+  @media (width >= 80rem) {
+    padding-block: 8rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Native select with a direction-aware chevron. */
+.select-chevron {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2355565c' stroke-width='2'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.75rem center;
+}
+[dir="rtl"] .select-chevron {
+  background-position: left 0.75rem center;
+}
+
+@keyframes ri-fade-in {
+  from { opacity: 0; }
+}
+@keyframes ri-sheet-in {
+  from { opacity: 0; transform: translateY(1.5rem); }
+}
+[data-side="start"][data-state="open"] {
+  animation-name: ri-fade-in;
+}

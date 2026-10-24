@@ -1,0 +1,58 @@
+/* ROYAL INK design tokens. See docs/DESIGN_SYSTEM.md. Mapped into Tailwind's theme in src/app/globals.css. */
+:root {
+  --ri-bg: #ffffff;
+  --ri-surface: #f6f6f7;
+  --ri-ink: #0d0d0f;
+  --ri-ink-2: #55565c;
+  --ri-line: #e6e6e9;
+  --ri-red: #c8102e;
+  --ri-red-ink: #ffffff;
+  --ri-success: #167c3a;
+  --ri-warning: #a35b00;
+
+  --ri-font-latin: "Inter", system-ui, sans-serif;
+  --ri-font-arabic: "IBM Plex Sans Arabic", "Noto Sans Arabic", system-ui, sans-serif;
+
+  --ri-radius-control: 10px;
+  --ri-radius-card: 16px;
+  --ri-radius-media: 24px;
+
+  --ri-shadow-1: 0 1px 2px rgb(13 13 15 / 0.04), 0 8px 24px rgb(13 13 15 / 0.06);
+  --ri-shadow-2: 0 2px 6px rgb(13 13 15 / 0.06), 0 24px 48px rgb(13 13 15 / 0.12);
+
+  --ri-ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --ri-fast: 150ms;
+  --ri-base: 250ms;
+  --ri-slow: 400ms;
+
+  --ri-content: 1280px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --ri-bg: #0b0b0c;
+    --ri-surface: #151517;
+    --ri-ink: #f4f4f5;
+    --ri-ink-2: #a7a8ae;
+    --ri-line: #26262a;
+    --ri-red: #ff3b4f;
+    --ri-red-ink: #0b0b0c;
+    --ri-success: #3ccf6e;
+    --ri-warning: #f2a33a;
+  }
+}
+:root[data-theme="dark"] {
+  --ri-bg: #0b0b0c;
+  --ri-surface: #151517;
+  --ri-ink: #f4f4f5;
+  --ri-ink-2: #a7a8ae;
+  --ri-line: #26262a;
+  --ri-red: #ff3b4f;
+  --ri-red-ink: #0b0b0c;
+  --ri-success: #3ccf6e;
+  --ri-warning: #f2a33a;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root { --ri-fast: 0ms; --ri-base: 0ms; --ri-slow: 0ms; }
+}
