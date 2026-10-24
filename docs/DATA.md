@@ -9,7 +9,7 @@ Nothing in the production database is invented. This table shows where each kind
 | Delivery fees | **Empty** | Business decision. Set per wilaya and method in Admin → Delivery. A wilaya with no active rate cannot be selected at checkout. |
 | Pickup points | **Empty** | Business data (e.g. the El Eulma HQ). |
 | Categories | Seeded (structure only) | Editable in Admin → Categories. |
-| Products, prices, stock | **Empty** | Entered or CSV-imported by staff. `status = 'active'` requires a real price. |
+| Products, prices, stock | **Import ready** | `scripts/import/royalink_db_to_sql.py` converts `ROYALINK DATABASE.xlsx` (1 135 items) into SQL: all **drafts**, opening stock recorded once. Export prices are not confirmed selling prices: staff review, then publish. `status = 'active'` requires a real price. |
 | Printer compatibility | **Empty** | Only `verified = true` links are shown to customers. Supplier data (for example the Tinkco export used in the earlier `formation` prototype) can be imported as **unverified** with `source` set, then verified by staff. |
 | Payment providers | None | Cash on delivery only. Online payment is added only after a real provider (e.g. CIB/Edahabia via SATIM) is contracted and configured. |
 | Analytics | Derived | Computed from real orders; empty until orders exist. |

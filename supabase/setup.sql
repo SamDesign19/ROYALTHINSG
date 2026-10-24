@@ -1427,6 +1427,27 @@ insert into categories (slug, parent_id, name, sort_order) values ('paper', (sel
 insert into categories (slug, parent_id, name, sort_order) values ('labels', (select id from categories where slug = 'supplies'), '{"fr": "Étiquettes", "en": "Labels", "ar": "الملصقات"}', 5) on conflict (slug) do nothing;
 insert into categories (slug, parent_id, name, sort_order) values ('cleaning', (select id from categories where slug = 'supplies'), '{"fr": "Nettoyage", "en": "Cleaning", "ar": "التنظيف"}', 6) on conflict (slug) do nothing;
 
+-- Computers, office equipment and furniture (added with the ROYALINK catalog import).
+insert into categories (slug, parent_id, name, sort_order) values ('duplicator-supplies', (select id from categories where slug = 'supplies'), '{"fr": "Consommables duplicopieur", "en": "Duplicator supplies", "ar": "مستلزمات آلات النسخ"}', 7) on conflict (slug) do nothing;
+insert into categories (slug, parent_id, name, sort_order) values ('ribbons', (select id from categories where slug = 'supplies'), '{"fr": "Rubans", "en": "Ribbons", "ar": "الأشرطة"}', 8) on conflict (slug) do nothing;
+insert into categories (slug, parent_id, name, sort_order) values ('computers', null, '{"fr": "Informatique", "en": "Computers", "ar": "الإعلام الآلي"}', 4) on conflict (slug) do nothing;
+insert into categories (slug, parent_id, name, sort_order) values ('laptops', (select id from categories where slug = 'computers'), '{"fr": "Ordinateurs portables", "en": "Laptops", "ar": "الحواسيب المحمولة"}', 1) on conflict (slug) do nothing;
+insert into categories (slug, parent_id, name, sort_order) values ('desktops', (select id from categories where slug = 'computers'), '{"fr": "Ordinateurs de bureau", "en": "Desktop computers", "ar": "الحواسيب المكتبية"}', 2) on conflict (slug) do nothing;
+insert into categories (slug, parent_id, name, sort_order) values ('monitors', (select id from categories where slug = 'computers'), '{"fr": "Écrans", "en": "Monitors", "ar": "الشاشات"}', 3) on conflict (slug) do nothing;
+insert into categories (slug, parent_id, name, sort_order) values ('components', (select id from categories where slug = 'computers'), '{"fr": "Composants", "en": "Components", "ar": "المكونات"}', 4) on conflict (slug) do nothing;
+insert into categories (slug, parent_id, name, sort_order) values ('storage', (select id from categories where slug = 'computers'), '{"fr": "Stockage", "en": "Storage", "ar": "التخزين"}', 5) on conflict (slug) do nothing;
+insert into categories (slug, parent_id, name, sort_order) values ('peripherals', (select id from categories where slug = 'computers'), '{"fr": "Périphériques", "en": "Peripherals", "ar": "الملحقات"}', 6) on conflict (slug) do nothing;
+insert into categories (slug, parent_id, name, sort_order) values ('networking', (select id from categories where slug = 'computers'), '{"fr": "Réseau et câbles", "en": "Networking and cables", "ar": "الشبكات والكوابل"}', 7) on conflict (slug) do nothing;
+insert into categories (slug, parent_id, name, sort_order) values ('power-protection', (select id from categories where slug = 'computers'), '{"fr": "Onduleurs et multiprises", "en": "UPS and power strips", "ar": "المموجات والمقابس"}', 8) on conflict (slug) do nothing;
+insert into categories (slug, parent_id, name, sort_order) values ('software', (select id from categories where slug = 'computers'), '{"fr": "Logiciels", "en": "Software", "ar": "البرمجيات"}', 9) on conflict (slug) do nothing;
+insert into categories (slug, parent_id, name, sort_order) values ('office-equipment', null, '{"fr": "Équipement de bureau", "en": "Office equipment", "ar": "معدات المكتب"}', 5) on conflict (slug) do nothing;
+insert into categories (slug, parent_id, name, sort_order) values ('scanners', (select id from categories where slug = 'office-equipment'), '{"fr": "Scanners", "en": "Scanners", "ar": "الماسحات الضوئية"}', 1) on conflict (slug) do nothing;
+insert into categories (slug, parent_id, name, sort_order) values ('projectors', (select id from categories where slug = 'office-equipment'), '{"fr": "Vidéoprojecteurs", "en": "Projectors", "ar": "أجهزة العرض"}', 2) on conflict (slug) do nothing;
+insert into categories (slug, parent_id, name, sort_order) values ('duplicators', (select id from categories where slug = 'office-equipment'), '{"fr": "Duplicopieurs", "en": "Duplicators", "ar": "آلات النسخ"}', 3) on conflict (slug) do nothing;
+insert into categories (slug, parent_id, name, sort_order) values ('counting-machines', (select id from categories where slug = 'office-equipment'), '{"fr": "Compteuses de billets", "en": "Banknote counters", "ar": "آلات عد النقود"}', 4) on conflict (slug) do nothing;
+insert into categories (slug, parent_id, name, sort_order) values ('office-misc', (select id from categories where slug = 'office-equipment'), '{"fr": "Divers bureau", "en": "Other office equipment", "ar": "معدات مكتبية أخرى"}', 5) on conflict (slug) do nothing;
+insert into categories (slug, parent_id, name, sort_order) values ('office-furniture', null, '{"fr": "Mobilier de bureau", "en": "Office furniture", "ar": "الأثاث المكتبي"}', 6) on conflict (slug) do nothing;
+
 insert into settings (key, value) values
   ('reviews_enabled', 'false'),
   ('store', '{"name": "ROYAL INK", "currency": "DZD", "default_locale": "ar"}')

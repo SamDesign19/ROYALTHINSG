@@ -49,10 +49,13 @@ union all
 select 'seed: 58 wilayas', (select count(*) from public.wilayas where code between 1 and 58) = 58,
        (select count(*) from public.wilayas)::text || ' rows'
 union all
-select 'seed: 16 categories', (select count(*) from public.categories where slug in (
+select 'seed: 35 categories', (select count(*) from public.categories where slug in (
          'ink-toner', 'ink-bottles', 'ink-cartridges', 'toner-cartridges', 'printers', 'inkjet-printers',
          'laser-printers', 'multifunction-printers', 'tank-printers', 'supplies', 'drum-units',
-         'maintenance-boxes', 'printer-parts', 'paper', 'labels', 'cleaning')) = 16,
+         'maintenance-boxes', 'printer-parts', 'paper', 'labels', 'cleaning', 'duplicator-supplies', 'ribbons',
+         'computers', 'laptops', 'desktops', 'monitors', 'components', 'storage', 'peripherals', 'networking',
+         'power-protection', 'software', 'office-equipment', 'scanners', 'projectors', 'duplicators',
+         'counting-machines', 'office-misc', 'office-furniture')) = 35,
        (select count(*) from public.categories)::text || ' rows'
 union all
 select 'seed: settings', (select count(*) from public.settings where key in ('reviews_enabled', 'store')) = 2, ''
