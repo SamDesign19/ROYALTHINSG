@@ -1,4 +1,5 @@
 import { NextResponse, type NextRequest } from "next/server";
+import { NO_CDN_CACHE } from "@/lib/http";
 import { getSuggestions } from "@/features/search/queries";
 
 export async function GET(request: NextRequest) {
@@ -6,7 +7,7 @@ export async function GET(request: NextRequest) {
   if (q.length < 2) return NextResponse.json({ products: [], printers: [], categories: [] });
   try {
     const data = await getSuggestions(q);
-    return NextResponse.json(data, { headers: { "Cache-Control": "public, s-maxage=60, stale-while-revalidate=300" } });
+    return NextResponse.json(data, { headers: NO_CDN_CACHE });
   } catch (err) {
     console.error(err);
     return NextResponse.json({ error: "suggestions_unavailable" }, { status: 502 });

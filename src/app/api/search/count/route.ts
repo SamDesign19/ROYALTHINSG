@@ -1,4 +1,5 @@
 import { NextResponse, type NextRequest } from "next/server";
+import { NO_CDN_CACHE } from "@/lib/http";
 import { getPrinter } from "@/features/compatibility/queries";
 import { parseSearchParams, type RawSearchParams } from "@/features/search/params";
 import { searchProducts } from "@/features/search/queries";
@@ -11,7 +12,7 @@ export async function GET(request: NextRequest) {
   try {
     const printer = filters.printer ? await getPrinter(filters.printer) : null;
     const { total } = await searchProducts(filters, { printerId: printer?.id, limit: 1 });
-    return NextResponse.json({ total }, { headers: { "Cache-Control": "public, s-maxage=60" } });
+    return NextResponse.json({ total }, { headers: NO_CDN_CACHE });
   } catch (err) {
     console.error(err);
     return NextResponse.json({ error: "count_unavailable" }, { status: 502 });
