@@ -2,6 +2,8 @@
 -- category structure and default settings. No products, prices, stock or delivery fees are
 -- seeded: those are business data entered from the admin dashboard.
 -- English uses the official French transliteration.
+-- Safe to re-run: every insert skips rows that already exist and never updates them, so
+-- running it on a live database only adds what is missing.
 
 insert into wilayas (code, name) values
   (1, '{"fr": "Adrar", "en": "Adrar", "ar": "أدرار"}'),
@@ -61,25 +63,27 @@ insert into wilayas (code, name) values
   (55, '{"fr": "Touggourt", "en": "Touggourt", "ar": "تقرت"}'),
   (56, '{"fr": "Djanet", "en": "Djanet", "ar": "جانت"}'),
   (57, '{"fr": "El M''Ghair", "en": "El M''Ghair", "ar": "المغير"}'),
-  (58, '{"fr": "El Meniaa", "en": "El Meniaa", "ar": "المنيعة"}');
+  (58, '{"fr": "El Meniaa", "en": "El Meniaa", "ar": "المنيعة"}')
+on conflict (code) do nothing;
 
-insert into categories (slug, parent_id, name, sort_order) values ('ink-toner', null, '{"fr": "Encre & toner", "en": "Ink & toner", "ar": "الحبر والتونر"}', 1);
-insert into categories (slug, parent_id, name, sort_order) values ('ink-bottles', (select id from categories where slug = 'ink-toner'), '{"fr": "Bouteilles d''encre", "en": "Ink bottles", "ar": "زجاجات الحبر"}', 1);
-insert into categories (slug, parent_id, name, sort_order) values ('ink-cartridges', (select id from categories where slug = 'ink-toner'), '{"fr": "Cartouches d''encre", "en": "Ink cartridges", "ar": "خراطيش الحبر"}', 2);
-insert into categories (slug, parent_id, name, sort_order) values ('toner-cartridges', (select id from categories where slug = 'ink-toner'), '{"fr": "Toners laser", "en": "Toner cartridges", "ar": "خراطيش التونر"}', 3);
-insert into categories (slug, parent_id, name, sort_order) values ('printers', null, '{"fr": "Imprimantes", "en": "Printers", "ar": "الطابعات"}', 2);
-insert into categories (slug, parent_id, name, sort_order) values ('inkjet-printers', (select id from categories where slug = 'printers'), '{"fr": "Imprimantes jet d''encre", "en": "Inkjet printers", "ar": "طابعات نافثة للحبر"}', 1);
-insert into categories (slug, parent_id, name, sort_order) values ('laser-printers', (select id from categories where slug = 'printers'), '{"fr": "Imprimantes laser", "en": "Laser printers", "ar": "طابعات ليزر"}', 2);
-insert into categories (slug, parent_id, name, sort_order) values ('multifunction-printers', (select id from categories where slug = 'printers'), '{"fr": "Multifonctions", "en": "Multifunction printers", "ar": "طابعات متعددة الوظائف"}', 3);
-insert into categories (slug, parent_id, name, sort_order) values ('tank-printers', (select id from categories where slug = 'printers'), '{"fr": "Imprimantes à réservoir", "en": "Ink tank printers", "ar": "طابعات بخزان حبر"}', 4);
-insert into categories (slug, parent_id, name, sort_order) values ('supplies', null, '{"fr": "Fournitures", "en": "Supplies", "ar": "المستلزمات"}', 3);
-insert into categories (slug, parent_id, name, sort_order) values ('drum-units', (select id from categories where slug = 'supplies'), '{"fr": "Tambours", "en": "Drum units", "ar": "وحدات الأسطوانة"}', 1);
-insert into categories (slug, parent_id, name, sort_order) values ('maintenance-boxes', (select id from categories where slug = 'supplies'), '{"fr": "Boîtes de maintenance", "en": "Maintenance boxes", "ar": "علب الصيانة"}', 2);
-insert into categories (slug, parent_id, name, sort_order) values ('printer-parts', (select id from categories where slug = 'supplies'), '{"fr": "Pièces d''imprimante", "en": "Printer parts", "ar": "قطع الطابعات"}', 3);
-insert into categories (slug, parent_id, name, sort_order) values ('paper', (select id from categories where slug = 'supplies'), '{"fr": "Papier", "en": "Paper", "ar": "الورق"}', 4);
-insert into categories (slug, parent_id, name, sort_order) values ('labels', (select id from categories where slug = 'supplies'), '{"fr": "Étiquettes", "en": "Labels", "ar": "الملصقات"}', 5);
-insert into categories (slug, parent_id, name, sort_order) values ('cleaning', (select id from categories where slug = 'supplies'), '{"fr": "Nettoyage", "en": "Cleaning", "ar": "التنظيف"}', 6);
+insert into categories (slug, parent_id, name, sort_order) values ('ink-toner', null, '{"fr": "Encre & toner", "en": "Ink & toner", "ar": "الحبر والتونر"}', 1) on conflict (slug) do nothing;
+insert into categories (slug, parent_id, name, sort_order) values ('ink-bottles', (select id from categories where slug = 'ink-toner'), '{"fr": "Bouteilles d''encre", "en": "Ink bottles", "ar": "زجاجات الحبر"}', 1) on conflict (slug) do nothing;
+insert into categories (slug, parent_id, name, sort_order) values ('ink-cartridges', (select id from categories where slug = 'ink-toner'), '{"fr": "Cartouches d''encre", "en": "Ink cartridges", "ar": "خراطيش الحبر"}', 2) on conflict (slug) do nothing;
+insert into categories (slug, parent_id, name, sort_order) values ('toner-cartridges', (select id from categories where slug = 'ink-toner'), '{"fr": "Toners laser", "en": "Toner cartridges", "ar": "خراطيش التونر"}', 3) on conflict (slug) do nothing;
+insert into categories (slug, parent_id, name, sort_order) values ('printers', null, '{"fr": "Imprimantes", "en": "Printers", "ar": "الطابعات"}', 2) on conflict (slug) do nothing;
+insert into categories (slug, parent_id, name, sort_order) values ('inkjet-printers', (select id from categories where slug = 'printers'), '{"fr": "Imprimantes jet d''encre", "en": "Inkjet printers", "ar": "طابعات نافثة للحبر"}', 1) on conflict (slug) do nothing;
+insert into categories (slug, parent_id, name, sort_order) values ('laser-printers', (select id from categories where slug = 'printers'), '{"fr": "Imprimantes laser", "en": "Laser printers", "ar": "طابعات ليزر"}', 2) on conflict (slug) do nothing;
+insert into categories (slug, parent_id, name, sort_order) values ('multifunction-printers', (select id from categories where slug = 'printers'), '{"fr": "Multifonctions", "en": "Multifunction printers", "ar": "طابعات متعددة الوظائف"}', 3) on conflict (slug) do nothing;
+insert into categories (slug, parent_id, name, sort_order) values ('tank-printers', (select id from categories where slug = 'printers'), '{"fr": "Imprimantes à réservoir", "en": "Ink tank printers", "ar": "طابعات بخزان حبر"}', 4) on conflict (slug) do nothing;
+insert into categories (slug, parent_id, name, sort_order) values ('supplies', null, '{"fr": "Fournitures", "en": "Supplies", "ar": "المستلزمات"}', 3) on conflict (slug) do nothing;
+insert into categories (slug, parent_id, name, sort_order) values ('drum-units', (select id from categories where slug = 'supplies'), '{"fr": "Tambours", "en": "Drum units", "ar": "وحدات الأسطوانة"}', 1) on conflict (slug) do nothing;
+insert into categories (slug, parent_id, name, sort_order) values ('maintenance-boxes', (select id from categories where slug = 'supplies'), '{"fr": "Boîtes de maintenance", "en": "Maintenance boxes", "ar": "علب الصيانة"}', 2) on conflict (slug) do nothing;
+insert into categories (slug, parent_id, name, sort_order) values ('printer-parts', (select id from categories where slug = 'supplies'), '{"fr": "Pièces d''imprimante", "en": "Printer parts", "ar": "قطع الطابعات"}', 3) on conflict (slug) do nothing;
+insert into categories (slug, parent_id, name, sort_order) values ('paper', (select id from categories where slug = 'supplies'), '{"fr": "Papier", "en": "Paper", "ar": "الورق"}', 4) on conflict (slug) do nothing;
+insert into categories (slug, parent_id, name, sort_order) values ('labels', (select id from categories where slug = 'supplies'), '{"fr": "Étiquettes", "en": "Labels", "ar": "الملصقات"}', 5) on conflict (slug) do nothing;
+insert into categories (slug, parent_id, name, sort_order) values ('cleaning', (select id from categories where slug = 'supplies'), '{"fr": "Nettoyage", "en": "Cleaning", "ar": "التنظيف"}', 6) on conflict (slug) do nothing;
 
 insert into settings (key, value) values
   ('reviews_enabled', 'false'),
-  ('store', '{"name": "ROYAL INK", "currency": "DZD", "default_locale": "ar"}');
+  ('store', '{"name": "ROYAL INK", "currency": "DZD", "default_locale": "ar"}')
+on conflict (key) do nothing;

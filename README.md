@@ -78,12 +78,30 @@ CI runs the same script on every push (`.github/workflows/database.yml`).
 ## Set up Supabase
 
 1. Create a Supabase project (region closest to Algeria, e.g. Frankfurt).
-2. Install the Supabase CLI, then from this folder: `supabase link --project-ref <ref>` and `supabase db push`.
-3. Load reference data: run `supabase/seed/01_reference.sql` in the SQL editor.
+2. Apply the schema (see [Existing project](#existing-project-check-before-pushing) if it is not empty):
+   `npx supabase login`, `npx supabase link --project-ref <ref>`, `npx supabase db push --dry-run`, then
+   `npx supabase db push`. (Without the CLI: paste `supabase/setup.sql` into the SQL editor, once, on an empty project.)
+3. Load reference data: run `supabase/seed/01_reference.sql` in the SQL editor. It only inserts missing rows,
+   so it is safe to re-run. Never load `tests/db/02_fixtures.sql` into a real project.
 4. Create storage buckets `product-images` (public), `banners` (public), `quotes` (private).
 5. Sign up your own account, then make it admin in the SQL editor:
    `update profiles set role = 'admin' where id = (select id from auth.users where email = 'you@example.com');`
 6. Copy `.env.example` to `.env.local` and fill in the project URL and keys (service role key: server only).
+
+### Existing project: check before pushing
+
+If the schema was applied with `supabase/setup.sql` in the SQL editor, the project has the tables but no CLI
+migration history, and `db push` would try to re-run every migration. It fails on the first statement and
+rolls back (nothing is lost), but it cannot succeed. Instead:
+
+1. Run `supabase/check-schema.sql` in the SQL editor (read-only). Every row must say `ok = true`, except
+   `cli migration history present`, which is `false` in this case.
+2. Record the migrations as already applied, without running them:
+   `npx supabase migration repair --status applied 20261023000001 20261023000002 20261023000003 20261023000004 20261023000005 20261023000006 20261023000007`
+3. `npx supabase db push --dry-run` must now report the database as up to date. Later migrations are then
+   pushed normally.
+
+If any check other than the history row fails, do not repair. Compare the project with `supabase/migrations` first.
 
 ## Documentation
 
