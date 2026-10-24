@@ -3,9 +3,9 @@
 Online store for printers, ink, toner and printing supplies, starting in Algeria (DZD, cash on delivery,
 58 wilayas) in Arabic, French and English.
 
-**Current state: Phase 2 complete — the Next.js storefront (catalog, search, product pages, "Find your ink",
-AR/FR/EN with RTL) runs on the Phase 1 database.** Cart, checkout, accounts and the admin are next;
-see [Phase status](docs/ARCHITECTURE.md#phase-status).
+**Current state: the storefront (catalog, search, product pages, "Find your ink", AR/FR/EN with RTL) and
+cash-on-delivery ordering (cart, checkout, confirmation, order tracking) run on the Phase 1 database.**
+Customer accounts, B2B pages and the admin are next; see [Phase status](docs/ARCHITECTURE.md#phase-status).
 
 ## What works today
 
@@ -63,6 +63,34 @@ npm run build && npm run test:e2e
 scripts/local-stack.sh down
 ```
 
+## Import the ROYALINK catalog
+
+`scripts/import/royalink_db_to_sql.py` turns the stock export `ROYALINK DATABASE.xlsx` (private repository
+`ROYALINK`) into SQL for the Supabase SQL editor:
+
+```bash
+python3 scripts/import/royalink_db_to_sql.py "path/to/ROYALINK DATABASE.xlsx"   # -> .local-imports/royalink-catalog.sql
+```
+
+* Every product is imported as a **draft** (invisible) with its opening stock; the price column of the export
+  is kept as a suggested price because it is not confirmed as a selling price. Review prices, then publish
+  (example query at the end of the generated file).
+* Safe to re-run: nothing existing is changed, stock is recorded once. No printer compatibility is imported.
+* The generated file contains business data: it is git-ignored and must not be committed (this repo is public).
+
+## Open ordering: delivery fees
+
+Checkout lists only wilayas that have an active delivery rate. Until rates exist, `/checkout` says ordering is
+not open yet. Example (SQL editor), one fee for every wilaya, home delivery only:
+
+```sql
+insert into delivery_rates (wilaya_code, method, fee_dzd, free_over_dzd, eta_min_days, eta_max_days)
+select code, 'home', 600, null, 2, 5 from wilayas
+on conflict (wilaya_code, method) do update set fee_dzd = excluded.fee_dzd;
+```
+
+Pickup needs rows in `pickup_points` plus a `pickup` rate for that wilaya.
+
 ## Run the database tests
 
 Requires PostgreSQL 15+ with the contrib extensions (`pg_trgm`, `unaccent`, `pgcrypto`, `citext`) and a superuser:
@@ -111,8 +139,9 @@ If any check other than the history row fails, do not repair. Compare the projec
 
 ## Known limitations
 
-* No cart, checkout, customer accounts, B2B pages or admin yet (Phases 4–5): product pages show price and
-  availability but have no "Add to cart" button, and the header has no account or cart icon.
+* Ordering is guest-only (no customer accounts yet), cash on delivery only. No B2B pages or admin yet: orders
+  are managed in Supabase (`set_order_status()`), until the back office (Phase 5).
+* The order rate limit is per server instance (in memory), so on serverless hosting it only slows down abuse.
 * The home page has no "Best sellers" row: the public API cannot tell real sales from zero sales, and the
   row is not shown with invented popularity. Brand logos are not displayed yet (no bucket defined for them).
 * Listing pages (search, category, brand, printer) render per request without a data cache; home, product,

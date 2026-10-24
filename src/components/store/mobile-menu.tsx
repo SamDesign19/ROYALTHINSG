@@ -54,6 +54,12 @@ export function MobileMenu({ categories }: { categories: NavCategory[] }) {
                 <ChevronRight className="size-4 text-ink-2 rtl:-scale-x-100" aria-hidden />
               </Link>
             </li>
+            <li>
+              <Link href="/track" onClick={close} className="flex min-h-12 items-center justify-between font-medium">
+                {t("track")}
+                <ChevronRight className="size-4 text-ink-2 rtl:-scale-x-100" aria-hidden />
+              </Link>
+            </li>
           </ul>
           <p className="mb-2 mt-6 text-xs font-medium uppercase tracking-wide text-ink-2">{t("language")}</p>
           <Suspense>

@@ -44,6 +44,18 @@ cart in Phase 4.
   `/api/search/count` (live count in the mobile filter sheet). All read-only, anon key.
 * `src/proxy.ts` (Next 16's replacement for middleware) handles locale routing via next-intl.
 
+### Cart and cash-on-delivery checkout (Phase 4, guest)
+
+* The cart is a cookie (`ri_cart`) holding product ids and quantities only: no prices, nothing secret. Server
+  Actions (`src/features/cart/actions.ts`) change it; the header reads the item count in the browser, so cached
+  catalog pages stay cached. Guests need no database row and no service-role key.
+* The cart page prices every line with `unit_price()` (volume tiers included), the function `place_order()` uses.
+* Checkout (`src/features/checkout/actions.ts`) validates with zod, normalises the phone like the database,
+  then calls `place_order()`, which re-prices, applies the promo code and delivery fee, locks and decrements
+  stock and records the order. Database errors map to translated messages.
+* Guests cannot read `orders` (RLS), so the confirmation page uses a short-lived httpOnly cookie set when the
+  order is placed; tracking uses `find_guest_order()` (order number + phone, sent by POST).
+
 ### Security model (implemented in `supabase/migrations/*_security.sql`)
 
 * RLS is enabled on every table. Shoppers read only active catalog rows, verified compatibility and their own
@@ -113,6 +125,6 @@ tests/db                        SQL test suite (this phase)
 | 1. Architecture & design system | Schema, business functions, RLS, reference data, design tokens, docs | **Done — 107 SQL checks + concurrency test passing** |
 | 2. Frontend foundation | Next.js app, layout, home, listings, product page, i18n/RTL | **Done — 16 unit tests, 11 Playwright tests (desktop + mobile)** |
 | 3. Product engine wiring | Catalog/search/compatibility pages on the real database | **Read side done with Phase 2** (search, filters, autocomplete, Find your ink, verified printers). Remaining: sitemap, admin-triggered cache revalidation |
-| 4. Shopping & checkout | Cart, accounts, checkout, order pages | Not started (database side done) |
+| 4. Shopping & checkout | Cart, accounts, checkout, order pages | **Guest cart, COD checkout, confirmation and tracking done** (3 Playwright tests). Remaining: customer accounts, order history, wishlist, B2B pages |
 | 5. Administration | Back office | Not started (permissions and functions done) |
 | 6. Optimisation & verification | SEO, performance, E2E tests (Playwright) | Not started |
