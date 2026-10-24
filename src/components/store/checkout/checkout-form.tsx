@@ -83,7 +83,7 @@ export function CheckoutForm({
       </div>
 
       {errorMessage ? (
-        <p role="alert" className="rounded-control border border-accent/40 bg-accent/5 px-4 py-3 text-sm font-medium text-accent">
+        <p role="alert" className="rounded-control border border-danger/40 bg-danger/5 px-4 py-3 text-sm font-medium text-danger">
           {errorMessage}
         </p>
       ) : null}
@@ -154,7 +154,7 @@ export function CheckoutForm({
                     activeMethod === r.method ? "border-ink" : "border-line hover:border-ink-2",
                   )}
                 >
-                  <input type="radio" name="method-choice" value={r.method} checked={activeMethod === r.method} onChange={() => setMethod(r.method)} className="mt-1 size-4 accent-[var(--ri-red)]" />
+                  <input type="radio" name="method-choice" value={r.method} checked={activeMethod === r.method} onChange={() => setMethod(r.method)} className="mt-1 size-4 accent-ink" />
                   <span className="space-y-1">
                     <span className="block font-medium">{r.method === "home" ? t("home") : t("pickup")}</span>
                     <span className="block text-sm text-ink-2">
@@ -243,7 +243,7 @@ function Field({ id, label, hint, error, children }: { id: string; label: string
       <Label htmlFor={id}>{label}</Label>
       {children}
       {error ? (
-        <p className="mt-1.5 text-sm font-medium text-accent">{error}</p>
+        <p className="mt-1.5 text-sm font-medium text-danger">{error}</p>
       ) : hint ? (
         <p className="mt-1.5 text-xs text-ink-2">{hint}</p>
       ) : null}

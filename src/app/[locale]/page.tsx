@@ -40,24 +40,24 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
     <>
       {/* Hero: the first active banner from Admin → Marketing, or the brand message. */}
       <section className="container-ri pt-6 md:pt-10">
-        <div className="grid items-center gap-8 overflow-hidden rounded-media bg-surface p-6 sm:p-10 md:grid-cols-[1.1fr_1fr] md:gap-12 lg:p-16">
+        <div className="grid items-center gap-8 overflow-hidden rounded-media bg-accent p-6 text-accent-ink sm:p-10 md:grid-cols-[1.1fr_1fr] md:gap-12 lg:p-16">
           <div className="animate-[ri-sheet-in_var(--ri-slow)_var(--ri-ease)] space-y-6">
             <h1 className="display text-4xl lg:text-5xl">{banner ? pick(banner.title, locale) : t("heroTitle")}</h1>
-            <p className="max-w-[52ch] text-lg text-ink-2">{banner ? pick(banner.subtitle, locale) : t("heroSubtitle")}</p>
+            <p className="max-w-[52ch] text-lg text-accent-ink/75">{banner ? pick(banner.subtitle, locale) : t("heroSubtitle")}</p>
             <div className="flex flex-wrap gap-3">
               {banner?.cta_href && banner.cta_label ? (
-                <Button asChild size="lg">
+                <Button asChild size="lg" variant="inverse">
                   <a href={banner.cta_href}>{pick(banner.cta_label, locale)}</a>
                 </Button>
               ) : (
-                <Button asChild size="lg">
+                <Button asChild size="lg" variant="inverse">
                   <Link href="/find-your-ink">
                     {t("heroFind")}
                     <ArrowRight className="rtl:-scale-x-100" aria-hidden />
                   </Link>
                 </Button>
               )}
-              <Button asChild size="lg" variant="secondary">
+              <Button asChild size="lg" variant="secondary" className="border-accent-ink text-accent-ink">
                 <Link href="/search">{t("heroBrowse")}</Link>
               </Button>
             </div>

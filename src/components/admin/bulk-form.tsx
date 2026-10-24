@@ -31,7 +31,7 @@ export function BulkForm({ action, ops, children }: { action: Action; ops: { op:
         <label className="flex items-center gap-2 text-sm">
           <input
             type="checkbox"
-            className="size-4 accent-[var(--ri-red)]"
+            className="size-4 accent-ink"
             onChange={(e) => {
               for (const b of boxes()) b.checked = e.target.checked;
               refresh();

@@ -130,7 +130,7 @@ export function FilterPanel({
           <div className="flex flex-col gap-1">
             {[{ value: "", label: t("any") }, ...ORIGINS.map((o) => ({ value: o, label: tOrigins(o) }))].map((o) => (
               <label key={o.value || "any"} className="flex min-h-9 cursor-pointer items-center gap-2.5 text-sm">
-                <input type="radio" name="origin" value={o.value} defaultChecked={(filters.origin ?? "") === o.value} className="size-4 accent-[var(--ri-red)]" />
+                <input type="radio" name="origin" value={o.value} defaultChecked={(filters.origin ?? "") === o.value} className="size-4 accent-ink" />
                 {o.label}
               </label>
             ))}

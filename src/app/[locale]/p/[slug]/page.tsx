@@ -189,7 +189,7 @@ export default async function ProductPage({ params }: PageProps<"/[locale]/p/[sl
               {reviews.map((r) => (
                 <li key={r.id} className="rounded-card border border-line p-5">
                   <p className="text-sm font-medium" aria-label={t("rating", { rating: r.rating })}>
-                    <span aria-hidden className="text-accent">{"★".repeat(r.rating)}</span>
+                    <span aria-hidden className="text-ink">{"★".repeat(r.rating)}</span>
                     <span aria-hidden className="text-line">{"★".repeat(5 - r.rating)}</span>
                   </p>
                   {r.title ? <p className="mt-2 font-semibold">{r.title}</p> : null}

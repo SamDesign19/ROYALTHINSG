@@ -1,12 +1,14 @@
-/* ROYAL INK design tokens. See docs/DESIGN_SYSTEM.md. Mapped into Tailwind's theme in src/app/globals.css. */
+/* ROYAL INK design tokens. See docs/DESIGN_SYSTEM.md. Mapped into Tailwind's theme in src/app/globals.css.
+   Palette: lime #cefb06 · ink #1a1a1a · paper #f4f4ef. */
 :root {
-  --ri-bg: #ffffff;
-  --ri-surface: #f6f6f7;
-  --ri-ink: #0d0d0f;
-  --ri-ink-2: #55565c;
-  --ri-line: #e6e6e9;
-  --ri-red: #c8102e;
-  --ri-red-ink: #ffffff;
+  --ri-bg: #f4f4ef;
+  --ri-surface: #e9e9e2;
+  --ri-ink: #1a1a1a;
+  --ri-ink-2: #5c5c57;
+  --ri-line: #d9d9d0;
+  --ri-accent: #cefb06;
+  --ri-accent-ink: #1a1a1a;
+  --ri-danger: #c8102e;
   --ri-success: #167c3a;
   --ri-warning: #a35b00;
 
@@ -17,8 +19,8 @@
   --ri-radius-card: 16px;
   --ri-radius-media: 24px;
 
-  --ri-shadow-1: 0 1px 2px rgb(13 13 15 / 0.04), 0 8px 24px rgb(13 13 15 / 0.06);
-  --ri-shadow-2: 0 2px 6px rgb(13 13 15 / 0.06), 0 24px 48px rgb(13 13 15 / 0.12);
+  --ri-shadow-1: 0 1px 2px rgb(26 26 26 / 0.05), 0 8px 24px rgb(26 26 26 / 0.07);
+  --ri-shadow-2: 0 2px 6px rgb(26 26 26 / 0.07), 0 24px 48px rgb(26 26 26 / 0.14);
 
   --ri-ease: cubic-bezier(0.2, 0.7, 0.2, 1);
   --ri-fast: 150ms;
@@ -28,27 +30,27 @@
   --ri-content: 1280px;
 }
 
+/* Dark palette: the whole page in dark mode, or any block marked .ri-dark (e.g. the footer). */
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --ri-bg: #0b0b0c;
-    --ri-surface: #151517;
-    --ri-ink: #f4f4f5;
-    --ri-ink-2: #a7a8ae;
-    --ri-line: #26262a;
-    --ri-red: #ff3b4f;
-    --ri-red-ink: #0b0b0c;
+    --ri-bg: #1a1a1a;
+    --ri-surface: #242424;
+    --ri-ink: #f4f4ef;
+    --ri-ink-2: #a3a39d;
+    --ri-line: #333333;
+    --ri-danger: #ff5a5f;
     --ri-success: #3ccf6e;
     --ri-warning: #f2a33a;
   }
 }
-:root[data-theme="dark"] {
-  --ri-bg: #0b0b0c;
-  --ri-surface: #151517;
-  --ri-ink: #f4f4f5;
-  --ri-ink-2: #a7a8ae;
-  --ri-line: #26262a;
-  --ri-red: #ff3b4f;
-  --ri-red-ink: #0b0b0c;
+:root[data-theme="dark"],
+.ri-dark {
+  --ri-bg: #1a1a1a;
+  --ri-surface: #242424;
+  --ri-ink: #f4f4ef;
+  --ri-ink-2: #a3a39d;
+  --ri-line: #333333;
+  --ri-danger: #ff5a5f;
   --ri-success: #3ccf6e;
   --ri-warning: #f2a33a;
 }

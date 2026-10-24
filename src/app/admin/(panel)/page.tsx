@@ -43,7 +43,7 @@ export default async function Dashboard() {
           const body = (
             <div className="h-full rounded-card border border-line bg-bg p-5">
               <p className="text-sm text-ink-2">{k.label}</p>
-              <p className={k.alert ? "mt-1 text-2xl font-semibold text-accent" : "mt-1 text-2xl font-semibold"}>{k.value}</p>
+              <p className={k.alert ? "mt-1 text-2xl font-semibold text-danger" : "mt-1 text-2xl font-semibold"}>{k.value}</p>
               {k.hint ? <p className="mt-1 text-xs text-ink-2">{k.hint}</p> : null}
             </div>
           );

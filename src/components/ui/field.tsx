@@ -17,5 +17,5 @@ export function Label({ className, ...props }: React.ComponentProps<"label">) {
 }
 
 export function Checkbox({ className, ...props }: Omit<React.ComponentProps<"input">, "type">) {
-  return <input type="checkbox" className={cn("size-4 shrink-0 rounded accent-[var(--ri-red)]", className)} {...props} />;
+  return <input type="checkbox" className={cn("size-4 shrink-0 rounded accent-ink", className)} {...props} />;
 }

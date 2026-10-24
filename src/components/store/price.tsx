@@ -32,7 +32,7 @@ export function Price({
       <Amount
         value={price}
         locale={locale}
-        className={cn("font-semibold", size === "lg" ? "text-2xl" : "text-base", pct ? "text-accent" : "text-ink")}
+        className={cn("font-semibold text-ink", size === "lg" ? "text-2xl" : "text-base")}
       />
       {pct && compareAt ? (
         <>
