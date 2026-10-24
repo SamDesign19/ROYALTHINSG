@@ -34,9 +34,10 @@ export async function getCommunes(wilaya: number) {
     .from("communes")
     .select("id, name, postal_code")
     .eq("wilaya_code", wilaya)
-    .order("postal_code");
+    .limit(200);
   if (error) throw new Error(`Failed to load communes: ${error.message}`);
-  return (data ?? []) as { id: number; name: Localized; postal_code: string | null }[];
+  const list = (data ?? []) as { id: number; name: Localized; postal_code: string | null }[];
+  return list.sort((a, b) => (a.name.fr ?? "").localeCompare(b.name.fr ?? "", "fr"));
 }
 
 export type GuestOrder = { order_number: string; status: string; total_dzd: number; created_at: string; history: { status: string; at: string }[] | null };

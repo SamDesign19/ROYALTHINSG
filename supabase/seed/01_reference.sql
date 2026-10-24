@@ -1,4 +1,4 @@
--- Reference data only: Algeria's 58 wilayas (as listed in the project brief), the catalog
+-- Reference data only: Algeria's 69 wilayas (58 + the 11 created by the 2025/2026 reform), the catalog
 -- category structure and default settings. No products, prices, stock or delivery fees are
 -- seeded: those are business data entered from the admin dashboard.
 -- English uses the official French transliteration.
@@ -63,7 +63,19 @@ insert into wilayas (code, name) values
   (55, '{"fr": "Touggourt", "en": "Touggourt", "ar": "تقرت"}'),
   (56, '{"fr": "Djanet", "en": "Djanet", "ar": "جانت"}'),
   (57, '{"fr": "El M''Ghair", "en": "El M''Ghair", "ar": "المغير"}'),
-  (58, '{"fr": "El Meniaa", "en": "El Meniaa", "ar": "المنيعة"}')
+  (58, '{"fr": "El Meniaa", "en": "El Meniaa", "ar": "المنيعة"}'),
+  -- 2025/2026 reform: eleven new wilayas.
+  (59, '{"fr": "Aflou", "en": "Aflou", "ar": "أفلو"}'),
+  (60, '{"fr": "El Abiodh Sidi Cheikh", "en": "El Abiodh Sidi Cheikh", "ar": "الأبيض سيدي الشيخ"}'),
+  (61, '{"fr": "El Aricha", "en": "El Aricha", "ar": "العريشة"}'),
+  (62, '{"fr": "El Kantara", "en": "El Kantara", "ar": "القنطرة"}'),
+  (63, '{"fr": "Barika", "en": "Barika", "ar": "بريكة"}'),
+  (64, '{"fr": "Bou Saâda", "en": "Bou Saâda", "ar": "بوسعادة"}'),
+  (65, '{"fr": "Bir El Ater", "en": "Bir El Ater", "ar": "بئر العاتر"}'),
+  (66, '{"fr": "Ksar El Boukhari", "en": "Ksar El Boukhari", "ar": "قصر البخاري"}'),
+  (67, '{"fr": "Ksar Chellala", "en": "Ksar Chellala", "ar": "قصر الشلالة"}'),
+  (68, '{"fr": "Aïn Oussara", "en": "Aïn Oussara", "ar": "عين وسارة"}'),
+  (69, '{"fr": "Messaad", "en": "Messaad", "ar": "مسعد"}')
 on conflict (code) do nothing;
 
 insert into categories (slug, parent_id, name, sort_order) values ('ink-toner', null, '{"fr": "Encre & toner", "en": "Ink & toner", "ar": "الحبر والتونر"}', 1) on conflict (slug) do nothing;

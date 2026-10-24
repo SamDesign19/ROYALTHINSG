@@ -2,7 +2,7 @@
   "meta": {
     "title": "ROYAL INK — Encre, toner et imprimantes en Algérie",
     "titleTemplate": "%s · ROYAL INK",
-    "description": "Encre, toner, imprimantes et consommables, originaux et compatibles. Trouvez la bonne cartouche pour votre imprimante. Livraison dans les 58 wilayas, paiement à la livraison."
+    "description": "Encre, toner, imprimantes et consommables, originaux et compatibles. Trouvez la bonne cartouche pour votre imprimante. Livraison dans les 69 wilayas, paiement à la livraison."
   },
   "common": {
     "skipToContent": "Aller au contenu",
@@ -40,7 +40,7 @@
     "shop": "Boutique",
     "help": "Services",
     "cod": "Paiement à la livraison",
-    "delivery": "Livraison dans les 58 wilayas",
+    "delivery": "Livraison dans les 69 wilayas",
     "verified": "Compatibilité imprimante vérifiée",
     "rights": "© {year} ROYAL INK. Tous droits réservés."
   },
@@ -61,7 +61,7 @@
   "trust": {
     "cod": "Paiement à la livraison",
     "codText": "Vous payez à la réception de votre commande.",
-    "wilayas": "58 wilayas",
+    "wilayas": "69 wilayas",
     "wilayasText": "Livraison à domicile ou en point relais.",
     "origin": "Original ou compatible",
     "originText": "Toujours clairement indiqué sur chaque produit.",
@@ -174,7 +174,7 @@
     "noImage": "Pas encore d'image",
     "image": "Image {index} sur {count}",
     "showImage": "Afficher l'image {index}",
-    "codDelivery": "Paiement à la livraison · Livraison dans les 58 wilayas",
+    "codDelivery": "Paiement à la livraison · Livraison dans les 69 wilayas",
     "addToCart": "Ajouter au panier",
     "added": "Ajouté au panier",
     "quantity": "Quantité",
